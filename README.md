@@ -1,15 +1,16 @@
 
+@'
 # Cryptography Basics: AES & RSA in Python
 
-A hands-on cybersecurity project exploring symmetric and asymmetric encryption using Python.
+A practical cybersecurity portfolio project demonstrating symmetric and asymmetric encryption using Python and the `cryptography` library.
 
 ## Overview
 
-This project demonstrates two cryptographic techniques using the Python `cryptography` library:
+This project explores two cryptographic techniques:
 
-- **AES-256-GCM:** Symmetric encryption with authenticated decryption.
-- **RSA-OAEP:** Asymmetric encryption using a public/private key pair.
-- **Automated testing:** Seven unit tests covering successful operations and selected failure cases.
+- **AES-256-GCM:** Authenticated symmetric encryption.
+- **RSA-OAEP with SHA-256:** Public-key encryption.
+- **Automated testing:** Seven unit tests covering successful encryption, decryption, and selected failure cases.
 
 ## Features
 
@@ -18,13 +19,14 @@ This project demonstrates two cryptographic techniques using the Python `cryptog
 - Detect modified AES-GCM ciphertext.
 - Generate a 2048-bit RSA key pair.
 - Use RSA-OAEP with SHA-256.
-- Verify functionality with Python's built-in `unittest`.
+- Test cryptographic operations using Python's built-in `unittest` framework.
+- Redact cryptographic keys and ciphertext in demonstration output.
 
 ## Technology Stack
 
-- Python 3.14
-- cryptography
-- unittest
+- Python
+- `cryptography`
+- `unittest`
 - Git and GitHub
 - Visual Studio Code
 
@@ -33,24 +35,22 @@ This project demonstrates two cryptographic techniques using the Python `cryptog
 ```text
 cryptography-basics-python/
 ├── main.py
-├── test_crypto.py
+├── Test_crypto.py
 ├── requirements.txt
 ├── .gitignore
 └── README.md
 ```
 
-## Installation
+## Installation and Usage
 
 ### 1. Clone the repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/VenkatSec/cryptography-basics-python.git
 cd cryptography-basics-python
 ```
 
-Replace `YOUR_GITHUB_REPOSITORY_URL` with your repository URL.
-
-### 2. Create a virtual environment
+### 2. Create and activate a virtual environment
 
 Windows PowerShell:
 
@@ -61,59 +61,65 @@ python -m venv .venv
 
 ### 3. Install dependencies
 
-```bash
+```powershell
 python -m pip install -r requirements.txt
 ```
 
 ### 4. Run the demonstration
 
-```bash
+```powershell
 python main.py
 ```
 
-Enter a short test message when prompted.
+Enter a short test message when prompted. The program demonstrates encryption and decryption while redacting the AES key and encrypted data from its output.
 
-### 5. Run automated tests
+### 5. Run the unit tests
 
-```bash
+```powershell
 python -m unittest -v
 ```
+
+The project currently includes seven unit tests for encryption/decryption round trips, empty messages, modified ciphertext, and incorrect keys.
 
 ## Cryptographic Concepts
 
 ### AES-256-GCM
 
-AES is a symmetric encryption algorithm: the same secret key is used to encrypt and decrypt data.
+AES is a symmetric encryption algorithm that uses the same secret key for encryption and decryption.
 
-GCM provides authenticated encryption, helping detect unauthorized changes to the ciphertext.
+GCM provides authenticated encryption, allowing the application to detect unauthorized changes to protected data.
 
 **Important:** Never reuse a nonce with the same AES-GCM key.
 
-### RSA-OAEP
+### RSA-OAEP with SHA-256
 
-RSA is an asymmetric algorithm that uses a public key and a private key.
+RSA is an asymmetric cryptographic algorithm that uses a public key and a private key.
 
-This project uses OAEP padding with SHA-256 for encryption.
-
-RSA supports only limited message sizes. For larger data, real-world applications commonly use hybrid encryption, combining symmetric encryption with public-key cryptography.
+This project uses OAEP padding with SHA-256. RSA can encrypt only limited amounts of data directly; practical systems commonly use hybrid encryption for larger messages.
 
 ## Security Considerations
 
-- This is an educational demonstration, not a production-ready encryption application.
-- The AES key is displayed in the terminal for learning purposes.
-- RSA private keys are generated in memory and are not saved to disk.
-- Real applications require secure key storage, access controls, and appropriate key lifecycle management.
-- Never commit private keys, credentials, or real sensitive data to a public repository.
+- This project is for educational purposes and is not a production-ready encryption application.
+- AES keys and RSA key pairs are generated in memory for the demonstration.
+- The terminal output redacts the AES key and ciphertext; redaction does not replace secure key management.
+- The demonstration does not persist generated private keys to disk.
+- Production systems require appropriate key storage, access controls, nonce management, and key lifecycle procedures.
+- Do not commit real secrets, private keys, credentials, or sensitive user data to a public repository.
 
 ## Learning Outcomes
 
 - Understand symmetric and asymmetric cryptography.
-- Implement AES-GCM encryption and decryption.
-- Understand RSA public/private key operations.
-- Test cryptographic success and failure cases.
+- Implement AES-GCM encryption and authenticated decryption.
+- Explore RSA public-key encryption and private-key decryption.
+- Test successful operations and selected failure cases.
 - Practice Python development, unit testing, and Git workflows.
+- Apply privacy-conscious output handling in a security project.
 
 ## Author
 
 Cybersecurity Learning Portfolio
-    
+
+---
+
+**Disclaimer:** This project is an educational demonstration and should not be treated as a complete or production-ready security solution.
+'@ | Set-Content -Path README.md -Encoding utf8

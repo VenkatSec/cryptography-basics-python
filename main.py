@@ -87,14 +87,14 @@ def main():
 
     print("\n--- AES-256-GCM ---")
     aes_key, aes_ciphertext = aes_encrypt(message)
-    print("AES key (Base64):", aes_key)
-    print("Encrypted data:", aes_ciphertext)
+    print("AES key: [REDACTED]")
+    print("Encrypted data: [REDACTED]")
     print("Decrypted message:", aes_decrypt(aes_key, aes_ciphertext))
 
     print("\n--- RSA-OAEP with SHA-256 ---")
     public_key, private_key = generate_rsa_keys()
     rsa_ciphertext = rsa_encrypt(message, public_key)
-    print("Encrypted data:", rsa_ciphertext)
+    print("Encrypted data: [REDACTED]")
     print("Decrypted message:", rsa_decrypt(rsa_ciphertext, private_key))
 
     print("\nAES and RSA demonstrations completed successfully.")
