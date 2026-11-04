@@ -1,4 +1,3 @@
-
 import base64
 import os
 
@@ -11,42 +10,28 @@ def aes_encrypt(message: str) -> tuple[str, str]:
     """Encrypt text using AES-256-GCM."""
     key = AESGCM.generate_key(bit_length=256)
     nonce = os.urandom(12)
-
-    aes = AESGCM(key)
-    ciphertext = aes.encrypt(nonce, message.encode("utf-8"), None)
-
-    key_b64 = base64.b64encode(key).decode("ascii")
-    encrypted_b64 = base64.b64encode(
-        nonce + ciphertext
-    ).decode("ascii")
-
-    return key_b64, encrypted_b64
+    ciphertext = AESGCM(key).encrypt(nonce, message.encode("utf-8"), None)
+    return (
+        base64.b64encode(key).decode("ascii"),
+        base64.b64encode(nonce + ciphertext).decode("ascii"),
+    )
 
 
 def aes_decrypt(key_b64: str, encrypted_b64: str) -> str:
     """Decrypt AES-GCM ciphertext and verify its authentication tag."""
     key = base64.b64decode(key_b64, validate=True)
     payload = base64.b64decode(encrypted_b64, validate=True)
-
     if len(key) != 32:
         raise ValueError("AES-256 requires a 32-byte key.")
-
     if len(payload) < 28:
         raise ValueError("Encrypted payload is too short.")
-
-    nonce = payload[:12]
-    ciphertext = payload[12:]
-
-    plaintext = AESGCM(key).decrypt(nonce, ciphertext, None)
+    plaintext = AESGCM(key).decrypt(payload[:12], payload[12:], None)
     return plaintext.decode("utf-8")
 
 
 def generate_rsa_keys():
     """Generate an RSA public/private key pair."""
-    private_key = rsa.generate_private_key(
-        public_exponent=65537,
-        key_size=2048,
-    )
+    private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
     return private_key.public_key(), private_key
 
 
@@ -66,7 +51,6 @@ def rsa_encrypt(message: str, public_key) -> str:
 def rsa_decrypt(encrypted_b64: str, private_key) -> str:
     """Decrypt RSA-OAEP ciphertext."""
     ciphertext = base64.b64decode(encrypted_b64, validate=True)
-
     plaintext = private_key.decrypt(
         ciphertext,
         padding.OAEP(
@@ -82,21 +66,21 @@ def main():
     print("=" * 48)
     print("       CRYPTOGRAPHY BASICS: AES & RSA")
     print("=" * 48)
-
-    message = input("Enter a short message to encrypt: ")
+    message = input("Enter a fictional test message (do not use private data): ")
 
     print("\n--- AES-256-GCM ---")
     aes_key, aes_ciphertext = aes_encrypt(message)
+    aes_verified = aes_decrypt(aes_key, aes_ciphertext) == message
     print("AES key: [REDACTED]")
     print("Encrypted data: [REDACTED]")
-    print("Decrypted message:", aes_decrypt(aes_key, aes_ciphertext))
+    print(f"Decryption round-trip verified: {aes_verified}")
 
     print("\n--- RSA-OAEP with SHA-256 ---")
     public_key, private_key = generate_rsa_keys()
     rsa_ciphertext = rsa_encrypt(message, public_key)
+    rsa_verified = rsa_decrypt(rsa_ciphertext, private_key) == message
     print("Encrypted data: [REDACTED]")
-    print("Decrypted message:", rsa_decrypt(rsa_ciphertext, private_key))
-
+    print(f"Decryption round-trip verified: {rsa_verified}")
     print("\nAES and RSA demonstrations completed successfully.")
 
 
