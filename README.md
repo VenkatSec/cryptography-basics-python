@@ -1,5 +1,3 @@
-
-@'
 # Cryptography Basics: AES & RSA in Python
 
 A practical cybersecurity portfolio project demonstrating symmetric and asymmetric encryption using Python and the `cryptography` library.
@@ -28,14 +26,13 @@ This project explores two cryptographic techniques:
 - `cryptography`
 - `unittest`
 - Git and GitHub
-- Visual Studio Code
 
 ## Project Structure
 
 ```text
 cryptography-basics-python/
 ├── main.py
-├── Test_crypto.py
+├── test_crypto.py
 ├── requirements.txt
 ├── .gitignore
 └── README.md
@@ -71,15 +68,15 @@ python -m pip install -r requirements.txt
 python main.py
 ```
 
-Enter a short test message when prompted. The program demonstrates encryption and decryption while redacting the AES key and encrypted data from its output.
+Enter a short fictional test message when prompted. The program demonstrates encryption and decryption while redacting the AES key and encrypted data from its output.
 
 ### 5. Run the unit tests
 
 ```powershell
-python -m unittest -v
+python -m unittest discover -v
 ```
 
-The project currently includes seven unit tests for encryption/decryption round trips, empty messages, modified ciphertext, and incorrect keys.
+The project includes seven unit tests for encryption/decryption round trips, empty messages, modified ciphertext, and incorrect keys.
 
 ## Cryptographic Concepts
 
@@ -115,11 +112,6 @@ This project uses OAEP padding with SHA-256. RSA can encrypt only limited amount
 - Practice Python development, unit testing, and Git workflows.
 - Apply privacy-conscious output handling in a security project.
 
-## Author
+## Disclaimer
 
-Cybersecurity Learning Portfolio
-
----
-
-**Disclaimer:** This project is an educational demonstration and should not be treated as a complete or production-ready security solution.
-'@ | Set-Content -Path README.md -Encoding utf8
+This project is an educational demonstration and should not be treated as a complete or production-ready security solution.
